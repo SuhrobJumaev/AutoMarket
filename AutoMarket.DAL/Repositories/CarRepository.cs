@@ -18,19 +18,24 @@ namespace AutoMarket.DAL.Repositories
             _db = db;
         }
 
-        public bool Create(Car entity)
+        public async Task<bool> Create(Car entity)
         {
-            throw new NotImplementedException();
+            await _db.AddAsync(entity);
+            await _db.SaveChangesAsync();
+            return true;
         }
 
-        public bool Delete(int id)
+        public async  Task<bool> Delete(Car entity)
         {
-            throw new NotImplementedException();
+            _db.car.Remove(entity);
+            await _db.SaveChangesAsync();
+
+            return true;
         }
 
-        public Car Get(int id)
+        public async Task<Car> Get(int id)
         {
-            throw new NotImplementedException();
+            return await _db.car.FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<List<Car>> GetAll()
@@ -38,9 +43,9 @@ namespace AutoMarket.DAL.Repositories
             return await _db.car.ToListAsync();
         }
 
-        public Car GetByName(string name)
+        public async Task<Car> GetByName(string name)
         {
-            throw new NotImplementedException();
-        }
+			return await _db.car.FirstOrDefaultAsync(c => c.Name == name);
+		}
     }
 }

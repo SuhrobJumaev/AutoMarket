@@ -1,6 +1,7 @@
 ﻿
 using AutoMarket.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoMarket.DAL
 {
@@ -11,6 +12,7 @@ namespace AutoMarket.DAL
             Database.EnsureCreated();
         }
 
+       
         public DbSet<Car> car { get; set; } 
     }
 }
