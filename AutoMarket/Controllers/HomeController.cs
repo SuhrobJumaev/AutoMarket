@@ -1,4 +1,5 @@
-﻿using AutoMarket.Models;
+﻿using AutoMarket.Domain.Entity;
+using AutoMarket.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,6 +16,7 @@ namespace AutoMarket.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
