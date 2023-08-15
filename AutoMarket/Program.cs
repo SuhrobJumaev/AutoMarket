@@ -1,4 +1,6 @@
 using AutoMarket.DAL;
+using AutoMarket.DAL.Interfaces;
+using AutoMarket.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresqlConnection"));
 });
 
+builder.Services.AddScoped<ICarRepository, CarRepository>();
 
 var app = builder.Build();
 

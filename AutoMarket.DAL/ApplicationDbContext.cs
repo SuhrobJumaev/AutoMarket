@@ -11,6 +11,6 @@ namespace AutoMarket.DAL
             Database.EnsureCreated();
         }
 
-        public DbSet<Car> Car { get; set; } 
+        public DbSet<Car> car { get; set; } 
     }
 }
