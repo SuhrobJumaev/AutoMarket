@@ -23,7 +23,7 @@ namespace AutoMarket.Service.Implementations
         }
 
 		public async Task<BaseResponse<List<Car>>> GetCars()
-		{
+	{
 			var response = new BaseResponse<List<Car>>();
 			try
 			{
@@ -46,6 +46,7 @@ namespace AutoMarket.Service.Implementations
 			}
 			return response;
 		}
+
 		public async Task<BaseResponse<Car>> GetCar(int id)
 		{
 			var response = new BaseResponse<Car>();
@@ -70,6 +71,7 @@ namespace AutoMarket.Service.Implementations
 			}
 			return response;
 		}
+
 		public async Task<BaseResponse<Car>> GetCarByName(string name)
 		{
 			var response = new BaseResponse<Car>();
@@ -94,6 +96,7 @@ namespace AutoMarket.Service.Implementations
 			}
 			return response;
 		}
+
 		public async Task<BaseResponse<bool>> DeleteCar(int id)
 		{
 			var response = new BaseResponse<bool>();
@@ -124,9 +127,9 @@ namespace AutoMarket.Service.Implementations
 			return response;
 		}
 
-		public async Task<BaseResponse<CarViewModel>> CreateCar(CarViewModel carViewModel)
+		public async Task<BaseResponse<Car>> CreateCar(CarViewModel carViewModel)
 		{
-			var response = new BaseResponse<CarViewModel>();
+			var response = new BaseResponse<Car>();
 			try
 			{
 				var car = new Car()
@@ -154,6 +157,42 @@ namespace AutoMarket.Service.Implementations
 			catch(Exception ex) 
 			{
 				response.Description = $"[CarService.CreateCar] : {ex.Message}";
+				response.StatusCode = StatusCode.InternalServerError;
+			}
+			return response;
+		}
+
+		public async Task<BaseResponse<Car>> UpdateCar(CarViewModel carViewModel)
+		{
+			var response = new BaseResponse<Car>();
+			try
+			{
+				var car = await _carRepository.Get(carViewModel.Id);
+				
+				if (car == null)
+				{
+					response.Description = "Car not found";
+					response.StatusCode = StatusCode.NotFound;
+					return response;
+				}
+
+				car.Description = carViewModel.Description;
+				car.Price = carViewModel.Price;	
+				car.Name = carViewModel.Name;
+				//car.TypeCar = (TypeCar)int.Parse(carViewModel.TypeCar);
+				car.Model = carViewModel.Model;
+				car.Speed = carViewModel.Speed;
+				car.DateCreate	= carViewModel.DateCreate;
+
+				var updatedCar = await _carRepository.Update(car);
+
+				response.Description = "Car was updated";
+				response.StatusCode = StatusCode.OK;
+				response.Data = updatedCar;
+			}
+			catch (Exception ex)
+			{
+				response.Description = $"[CarService.UpdateCar] : {ex.Message}";
 				response.StatusCode = StatusCode.InternalServerError;
 			}
 			return response;

@@ -47,5 +47,13 @@ namespace AutoMarket.DAL.Repositories
         {
 			return await _db.car.FirstOrDefaultAsync(c => c.Name == name);
 		}
-    }
+
+		public async Task<Car> Update(Car entity)
+		{
+			_db.car.Update(entity);
+            await _db.SaveChangesAsync();
+
+            return entity;
+		}
+	}
 }

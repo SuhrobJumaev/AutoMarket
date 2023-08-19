@@ -10,6 +10,7 @@ namespace AutoMarket.Service.Interfaces
 		Task<BaseResponse<Car>> GetCar(int id);
 		Task<BaseResponse<Car>> GetCarByName(string name);
 		Task<BaseResponse<bool>> DeleteCar(int id);
-		Task<BaseResponse<CarViewModel>> CreateCar(CarViewModel car);
+		Task<BaseResponse<Car>> CreateCar(CarViewModel car);
+		Task<BaseResponse<Car>> UpdateCar(CarViewModel car);
 	}
 }
